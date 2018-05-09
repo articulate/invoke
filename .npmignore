@@ -1,0 +1,6 @@
+.eslintrc.js
+.gitignore
+.npmignore
+node_modules
+test.js
+yarn.lock

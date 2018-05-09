@@ -1,7 +1,7 @@
 {
   "name": "@articulate/invoke",
   "version": "0.0.0",
-  "description": "Lamda invoke helper to simplify serialization and error handling",
+  "description": "Lambda invoke helper to simplify serialization and error handling",
   "main": "index.js",
   "repository": "git@github.com:articulate/invoke",
   "author": "articulate",

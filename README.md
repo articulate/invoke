@@ -5,3 +5,5 @@
 [![NSP Status](https://nodesecurity.io/orgs/articulate/projects/610cfddd-fa48-44a3-bcb9-2383c7da636f/badge)](https://nodesecurity.io/orgs/articulate/projects/610cfddd-fa48-44a3-bcb9-2383c7da636f)
 
 Lambda invoke helper to simplify serialization and error handling.
+
+See the [documentation](https://github.com/articulate/invoke/blob/master/API.md) for details and examples.

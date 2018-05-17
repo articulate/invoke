@@ -11,7 +11,7 @@
     "test": "mocha --reporter dot"
   },
   "dependencies": {
-    "@articulate/funky": "^1.0.0",
+    "@articulate/funky": "^1.0.1",
     "ramda": "^0.25.0"
   },
   "devDependencies": {

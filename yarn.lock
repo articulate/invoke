@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@articulate/funky@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@articulate/funky/-/funky-1.0.0.tgz#4d1706b03fb0f729a577a6689d5371e3fbd66612"
+"@articulate/funky@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@articulate/funky/-/funky-1.0.1.tgz#f54c6d18d259a091b85cafdde4229f2b50ca4547"
   dependencies:
     ramda "^0.25.0"
 

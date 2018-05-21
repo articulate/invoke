@@ -15,21 +15,22 @@ const opts = {
   when: propEq('statusCode', 429)
 }
 
-const inflateError = data => {
-  const err = new Error(data.errorMessage)
-  err.name = data.errorType
-  err.upstreamStack = data.stackTrace
-  return err
-}
+const invoke = FunctionName => {
+  const inflateError = data => {
+    const err = new Error(`[${FunctionName}] ${data.errorMessage}`)
+    err.FunctionName = FunctionName
+    err.name = data.errorType
+    err.upstreamStack = data.stackTrace
+    return err
+  }
 
-const checkError = ifElse(
-  prop('FunctionError'),
-  compose(reject, inflateError, prop('Payload')),
-  prop('Payload')
-)
+  const checkError = ifElse(
+    prop('FunctionError'),
+    compose(reject, inflateError, prop('Payload')),
+    prop('Payload')
+  )
 
-const invoke = FunctionName =>
-  backoff(opts,
+  return backoff(opts,
     pipe(
       JSON.stringify,
       objOf('Payload'),
@@ -44,5 +45,6 @@ const invoke = FunctionName =>
       )
     )
   )
+}
 
 module.exports = invoke

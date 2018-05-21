@@ -97,7 +97,8 @@ describe('invoke', () => {
     )
 
     it('inflates the upstream error', () => {
-      expect(res().message).to.equal('ruh roh')
+      expect(res().message).to.equal('[my-lambda] ruh roh')
+      expect(res().FunctionName).to.equal('my-lambda')
       expect(res().name).to.equal('SprocketError')
       expect(res().upstreamStack).to.eql([])
     })

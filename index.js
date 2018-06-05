@@ -1,12 +1,10 @@
-const AWS = require('aws-sdk')
 const { backoff, promisify, reject } = require('@articulate/funky')
 
 const {
-  compose, evolve, ifElse, merge, objOf, pipe, pipeP, prop, propEq
+  compose, curry, evolve, ifElse, merge,
+  objOf, pipe, pipeP, prop, propEq
 } = require('ramda')
 
-const lambda         = new AWS.Lambda()
-const _invoke        = promisify(lambda.invoke, lambda)
 const InvocationType = 'RequestResponse'
 
 const opts = {
@@ -15,7 +13,7 @@ const opts = {
   when: propEq('statusCode', 429)
 }
 
-const invoke = FunctionName => {
+const invoke = (lambda, FunctionName) => {
   const inflateError = data => {
     const err = new Error(`[${FunctionName}] ${data.errorMessage}`)
     err.FunctionName = FunctionName
@@ -39,7 +37,7 @@ const invoke = FunctionName => {
         InvocationType
       }),
       pipeP(
-        _invoke,
+        promisify(lambda.invoke, lambda),
         evolve({ Payload: JSON.parse }),
         checkError
       )
@@ -47,4 +45,4 @@ const invoke = FunctionName => {
   )
 }
 
-module.exports = invoke
+module.exports = curry(invoke)

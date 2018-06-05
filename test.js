@@ -1,6 +1,7 @@
-const { always, pick } = require('ramda')
+const { pick }   = require('ramda')
 const { expect } = require('chai')
-const proxyquire = require('proxyquire').noCallThru()
+
+const invoke = require('.')
 
 describe('invoke', () => {
   const input = { foo: 'bar' }
@@ -48,12 +49,10 @@ describe('invoke', () => {
   )
 
   describe('inputs', () => {
-    const invoke = proxyquire('.', {
-      'aws-sdk': { Lambda: always({ invoke: success }) }
-    })
+    const lambda = { invoke: success }
 
     beforeEach(() =>
-      invoke(name)(input)
+      invoke(lambda, name)(input)
     )
 
     it('invokes the specified lambda', () =>
@@ -70,12 +69,10 @@ describe('invoke', () => {
   })
 
   describe('on success', () => {
-    const invoke = proxyquire('.', {
-      'aws-sdk': { Lambda: always({ invoke: success }) }
-    })
+    const lambda = { invoke: success }
 
     beforeEach(() =>
-      invoke(name)(input).then(res)
+      invoke(lambda, name)(input).then(res)
     )
 
     it('parses the output Payload', () =>
@@ -84,12 +81,10 @@ describe('invoke', () => {
   })
 
   describe('on failure', () => {
-    const invoke = proxyquire('.', {
-      'aws-sdk': { Lambda: always({ invoke: failure }) }
-    })
+    const lambda = { invoke: failure }
 
     beforeEach(() =>
-      invoke(name)(input).catch(res)
+      invoke(lambda, name)(input).catch(res)
     )
 
     it('does not backoff', () =>
@@ -105,12 +100,10 @@ describe('invoke', () => {
   })
 
   describe('when concurrency limit reached', () => {
-    const invoke = proxyquire('.', {
-      'aws-sdk': { Lambda: always({ invoke: rateLimit() }) }
-    })
+    const lambda = { invoke: rateLimit() }
 
     beforeEach(() =>
-      invoke(name)(input).then(res)
+      invoke(lambda, name)(input).then(res)
     )
 
     it('backs-off invocations until success', () =>
